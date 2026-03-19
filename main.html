@@ -1,423 +1,518 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OPO - Portafolio Digital | MSc. José Goitia M.</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&display=swap');
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OPO - Services | MSc. José Goitia M.</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 
-        :root {
-            --dark-blue: #061121;
-            --accent-gold: #c5a059;
-            --accent-gold-light: #e2c28d;
-            --glass: rgba(255, 255, 255, 0.03);
-        }
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&display=swap');
 
-        * {
-            font-style: normal !important; /* Eliminación total de cursivas */
-        }
+    :root {
+      /* Azul Marino solicitado (imagen 3): #162B4E */
+      --dark-blue: #162B4E;
+      --accent-gold: #c5a059;
+      --accent-gold-light: #e2c28d;
+      --glass: rgba(255, 255, 255, 0.03);
+    }
 
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background-color: var(--dark-blue);
-            color: white;
-            margin: 0;
-            overflow: hidden;
-        }
+    * {
+      font-style: normal !important; /* Eliminación total de cursivas */
+    }
 
-        h1, h2, h3 {
-            font-weight: 800;
-            letter-spacing: -0.02em;
-            text-transform: uppercase;
-        }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--dark-blue);
+      color: white;
+      margin: 0;
+      overflow: hidden; /* presentación sin scroll */
+    }
 
-        .slide {
-            display: none;
-            height: 100vh;
-            width: 100vw;
-            padding: 2rem;
-            position: relative;
-            overflow: hidden;
-        }
+    h1, h2, h3 {
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+    }
 
-        .slide.active {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            animation: fadeInScale 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
+    .slide {
+      display: none;
+      height: 100vh;
+      width: 100vw;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
 
-        @keyframes fadeInScale {
-            from { opacity: 0; transform: scale(1.02); }
-            to { opacity: 1; transform: scale(1); }
-        }
+    .slide.active {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      animation: fadeInScale 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
 
-        /* FONDO PORTADA: Imagen de Caracas */
-        .hero-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(rgba(6, 17, 33, 0.7), rgba(6, 17, 33, 0.95)), 
-                        url('image1.png');
-            background-size: cover;
-            background-position: center;
-            z-index: -1;
-        }
+    @keyframes fadeInScale {
+      from { opacity: 0; transform: scale(1.02); }
+      to { opacity: 1; transform: scale(1); }
+    }
 
-        .glass-card {
-            background: var(--glass);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(197, 160, 89, 0.15);
-            border-radius: 0.5rem;
-        }
+    /* FONDO PORTADA */
+    .hero-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background:
+        linear-gradient(rgba(22, 43, 78, 0.70), rgba(22, 43, 78, 0.95)),
+        url('image1.png'); /* si tu archivo es image1.png.png, cambia aquí */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      z-index: -1;
 
-        .gold-gradient-text {
-            background: linear-gradient(to right, #f8fafc, #c5a059);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+      /* evita bloquear clicks/touches sobre botones */
+      pointer-events: none;
+    }
 
-        .progress-indicator {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 4px;
-            background: var(--accent-gold);
-            z-index: 100;
-            transition: width 0.5s ease;
-        }
+    .glass-card {
+      background: var(--glass);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(197, 160, 89, 0.15);
+      border-radius: 0.5rem;
+    }
 
-        .active .stagger {
-            animation: staggerUp 0.5s ease-out forwards;
-            opacity: 0;
-        }
+    .gold-gradient-text {
+      background: linear-gradient(to right, #f8fafc, #c5a059);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
 
-        @keyframes staggerUp {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
+    .progress-indicator {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 4px;
+      background: var(--accent-gold);
+      z-index: 100;
+      transition: width 0.5s ease;
+    }
 
-        /* Botones de Contacto */
-        .contact-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            padding: 14px 28px;
-            border-radius: 4px;
-            font-weight: 700;
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 0.1em;
-            transition: all 0.3s ease;
-            border: 1px solid var(--accent-gold);
-        }
+    .active .stagger {
+      animation: staggerUp 0.5s ease-out forwards;
+      opacity: 0;
+    }
 
-        .btn-wa {
-            background: rgba(197, 160, 89, 0.1);
-            color: var(--accent-gold);
-        }
+    @keyframes staggerUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
 
-        .btn-wa:hover {
-            background: var(--accent-gold);
-            color: var(--dark-blue);
-            transform: translateY(-3px);
-        }
+    /* Botones de Contacto */
+    .contact-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 28px;
+      border-radius: 4px;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      transition: all 0.3s ease;
+      border: 1px solid var(--accent-gold);
+    }
 
-        .btn-mail {
-            background: white;
-            color: var(--dark-blue);
-            border: none;
-        }
+    .btn-wa {
+      background: rgba(197, 160, 89, 0.1);
+      color: var(--accent-gold);
+    }
 
-        .btn-mail:hover {
-            background: var(--accent-gold-light);
-            transform: translateY(-3px);
-        }
-    </style>
+    .btn-wa:hover {
+      background: var(--accent-gold);
+      color: var(--dark-blue);
+      transform: translateY(-3px);
+    }
+
+    .btn-mail {
+      background: white;
+      color: var(--dark-blue);
+      border: none;
+    }
+
+    .btn-mail:hover {
+      background: var(--accent-gold-light);
+      transform: translateY(-3px);
+    }
+
+    /* =========================
+       MOBILE (solo se adiciona)
+       ========================= */
+    @media (max-width: 640px) {
+      /* Mantén el comportamiento tipo “presentación” (sin scroll en body) */
+      body {
+        overflow: hidden;
+      }
+
+      .slide {
+        padding: 1.25rem;
+        height: 100svh; /* mejor para móviles */
+        width: 100vw;
+      }
+
+      /* Si alguna diapositiva es larga, scroll solo dentro del slide activo */
+      .slide.active {
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      /* Portada: reduce tamaños para que no se corte */
+      #slide-0 h1 {
+        font-size: 4rem !important;
+        line-height: 1.0 !important;
+      }
+
+      #slide-0 h2 {
+        font-size: 1.1rem !important;
+        letter-spacing: 0.12em !important;
+        margin-bottom: 2.5rem !important;
+      }
+
+      #slide-0 .max-w-6xl {
+        padding-left: 0.75rem !important;
+        padding-right: 0.75rem !important;
+      }
+
+      #slide-0 span {
+        display: inline-block;
+        max-width: 100%;
+        padding: 0.6rem 0.9rem !important;
+        font-size: 9px !important;
+        letter-spacing: 0.35em !important;
+        text-align: center;
+      }
+
+      #slide-0 p {
+        font-size: 0.95rem !important;
+        letter-spacing: 0.18em !important;
+      }
+
+      /* Botonera navegación: más compacta en móvil */
+      .fixed.bottom-10.right-10 {
+        bottom: 1rem !important;
+        right: 1rem !important;
+        gap: 0.5rem !important;
+      }
+
+      .fixed.bottom-10.right-10 button {
+        padding: 0.85rem !important;
+      }
+
+      /* Tablas: permite scroll horizontal si no caben */
+      table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+      }
+    }
+  </style>
 </head>
+
 <body>
+  <div id="progress" class="progress-indicator" style="width: 0%"></div>
 
-    <div id="progress" class="progress-indicator" style="width: 0%"></div>
+  <main id="presentation">
+    <!-- DIAPOSITIVA 1: PORTADA -->
+    <section class="slide active" id="slide-0">
+      <div class="hero-bg"></div>
 
-    <main id="presentation">
+      <div class="z-10 text-center max-w-6xl px-6">
+        <div class="mb-4 stagger" style="animation-delay: 0.1s">
+          <span class="px-5 py-2 border border-[#c5a059]/30 bg-black/40 text-[10px] font-bold tracking-[0.5em] uppercase text-[#e2c28d]">
+            Outsourcing Prevención Organizacional
+          </span>
+        </div>
 
-        <!-- DIAPOSITIVA 1: PORTADA -->
-        <section class="slide active" id="slide-0">
-            <div class="hero-bg"></div>
-            <div class="z-10 text-center max-w-6xl px-6">
-                <div class="mb-4 stagger" style="animation-delay: 0.1s">
-                    <span class="px-5 py-2 border border-[#c5a059]/30 bg-black/40 text-[10px] font-bold tracking-[0.5em] uppercase text-[#e2c28d]">
-                        Outsourcing Prevención Organizacional
-                    </span>
-                </div>
-                <h1 class="text-7xl md:text-9xl font-black mb-2 stagger" style="animation-delay: 0.3s">
-                    OPO
-                </h1>
-                <h2 class="text-2xl md:text-4xl font-light tracking-[0.2em] uppercase mb-12 stagger" style="animation-delay: 0.5s">
-                    Blindaje Preventivo <span class="font-bold gold-gradient-text">360°</span>
-                </h2>
-                
-                <div class="stagger" style="animation-delay: 0.7s">
-                    <div class="h-[2px] w-20 bg-[#c5a059] mx-auto mb-6"></div>
-                    <p class="text-lg md:text-xl font-medium tracking-[0.3em] text-[#e2c28d]">MSc. José Goitia M.</p>
-                </div>
+        <h1 class="text-7xl md:text-9xl font-black mb-2 stagger" style="animation-delay: 0.3s">
+          OPO
+        </h1>
+
+        <h2 class="text-2xl md:text-4xl font-light tracking-[0.2em] uppercase mb-12 stagger" style="animation-delay: 0.5s">
+          Blindaje Preventivo <span class="font-bold gold-gradient-text">360°</span>
+        </h2>
+
+        <div class="stagger" style="animation-delay: 0.7s">
+          <div class="h-[2px] w-20 bg-[#c5a059] mx-auto mb-6"></div>
+          <p class="text-lg md:text-xl font-medium tracking-[0.3em] text-[#e2c28d]">MSc. José Goitia M.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- DIAPOSITIVA 2: VISIÓN ESTRATÉGICA -->
+    <section class="slide" id="slide-1">
+      <div class="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+        <div class="stagger">
+          <h2 class="text-4xl md:text-5xl font-bold mb-8 uppercase tracking-tight text-[#c5a059]">Visión Estratégica</h2>
+          <p class="text-lg text-slate-300 leading-relaxed mb-10">
+            La seguridad de una organización no puede ser reactiva. La vulnerabilidad física y la infiltración de personal representan las mayores amenazas para la rentabilidad y reputación institucional.
+          </p>
+          <div class="space-y-4">
+            <div class="p-4 glass-card border-l-4 border-[#c5a059]">
+              <p class="font-bold text-sm uppercase">Seguridad como Activo</p>
+              <p class="text-xs text-slate-400">Dejamos de ser un gasto operativo para convertirnos en un pilar estratégico de rentabilidad.</p>
             </div>
-        </section>
-
-        <!-- DIAPOSITIVA 2: VISIÓN ESTRATÉGICA -->
-        <section class="slide" id="slide-1">
-            <div class="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-                <div class="stagger">
-                    <h2 class="text-4xl md:text-5xl font-bold mb-8 uppercase tracking-tight text-[#c5a059]">Visión Estratégica</h2>
-                    <p class="text-lg text-slate-300 leading-relaxed mb-10">
-                        La seguridad de una organización no puede ser reactiva. La vulnerabilidad física y la infiltración de personal representan las mayores amenazas para la rentabilidad y reputación institucional.
-                    </p>
-                    <div class="space-y-4">
-                        <div class="p-4 glass-card border-l-4 border-[#c5a059]">
-                            <p class="font-bold text-sm uppercase">Seguridad como Activo</p>
-                            <p class="text-xs text-slate-400">Dejamos de ser un gasto operativo para convertirnos en un pilar estratégico de rentabilidad.</p>
-                        </div>
-                        <div class="p-4 glass-card border-l-4 border-[#c5a059]">
-                            <p class="font-bold text-sm uppercase">Prevención Proactiva</p>
-                            <p class="text-xs text-slate-400">Fundamentada en la mitigación de riesgos y verificación técnica Multi-Agencia.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="glass-card p-12 stagger">
-                    <p class="text-xl font-light leading-relaxed border-l-2 border-white/20 pl-6 text-slate-200 uppercase tracking-tighter">
-                        "La seguridad es una inversión que solo se nota cuando no se tiene, y para entonces, ya es demasiado tarde."
-                    </p>
-                </div>
+            <div class="p-4 glass-card border-l-4 border-[#c5a059]">
+              <p class="font-bold text-sm uppercase">Prevención Proactiva</p>
+              <p class="text-xs text-slate-400">Fundamentada en la mitigación de riesgos y verificación técnica Multi-Agencia.</p>
             </div>
-        </section>
+          </div>
+        </div>
+        <div class="glass-card p-12 stagger">
+          <p class="text-xl font-light leading-relaxed border-l-2 border-white/20 pl-6 text-slate-200 uppercase tracking-tighter">
+            "La seguridad es una inversión que solo se nota cuando no se tiene, y para entonces, ya es demasiado tarde."
+          </p>
+        </div>
+      </div>
+    </section>
 
-        <!-- DIAPOSITIVA 3: ESTÁNDARES ISO 9001 -->
-        <section class="slide" id="slide-2">
-            <div class="text-center mb-16 stagger">
-                <h2 class="text-4xl md:text-5xl font-bold mb-4 uppercase">Normativa <span class="text-[#c5a059]">ISO 9001</span></h2>
-                <p class="text-slate-400 text-sm tracking-widest uppercase">Estructura Internacional de Gestión de Calidad</p>
+    <!-- DIAPOSITIVA 3: ESTÁNDARES ISO 9001 -->
+    <section class="slide" id="slide-2">
+      <div class="text-center mb-16 stagger">
+        <h2 class="text-4xl md:text-5xl font-bold mb-4 uppercase">Normativa <span class="text-[#c5a059]">ISO 9001</span></h2>
+        <p class="text-slate-400 text-sm tracking-widest uppercase">Estructura Internacional de Gestión de Calidad</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl w-full px-4 stagger">
+        <div class="glass-card p-8 border-t-2 border-[#c5a059]">
+          <h3 class="text-lg font-bold mb-4">Continuidad de Negocio</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">No cumplimos normas por evitar sanciones; lo hacemos para garantizar que su operatividad no se detenga jamás.</p>
+        </div>
+        <div class="glass-card p-8 border-t-2 border-[#c5a059]">
+          <h3 class="text-lg font-bold mb-4">Mejora Continua</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">Ciclo PHVA: Planificar, Hacer, Verificar y Actuar para un blindaje que evoluciona con la amenaza.</p>
+        </div>
+        <div class="glass-card p-8 border-t-2 border-[#c5a059]">
+          <h3 class="text-lg font-bold mb-4">Toma de Decisiones</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">Enfoque basado en hechos y datos técnicos reales, eliminando la incertidumbre operativa.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- DIAPOSITIVA 4: DISEÑO AMBIENTAL (CPTED) -->
+    <section class="slide" id="slide-3">
+      <div class="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+        <div class="stagger">
+          <h2 class="text-4xl font-bold mb-8 uppercase tracking-tight">Diseño <span class="text-[#c5a059]">Ambiental</span></h2>
+          <p class="text-lg text-slate-300 leading-relaxed mb-8">
+            Modificamos el entorno físico para reducir la intención delictiva mediante la metodología de Diseño Ambiental para la Prevención del Delito.
+          </p>
+          <div class="bg-[#c5a059]/10 p-6 border border-[#c5a059]/30">
+            <span class="text-5xl font-black gold-gradient-text">40%</span>
+            <p class="text-xs uppercase font-bold tracking-widest mt-2">Reducción de probabilidad de incidencia delictiva.</p>
+          </div>
+        </div>
+        <div class="space-y-4 stagger">
+          <div class="p-6 glass-card">
+            <p class="font-bold text-sm uppercase mb-2">Puntos Críticos de Control</p>
+            <p class="text-xs text-slate-400">Identificación de áreas restringidas, gestión de activos de alto costo y flujos de información sensible.</p>
+          </div>
+          <div class="p-6 glass-card">
+            <p class="font-bold text-sm uppercase mb-2">Infraestructura Física</p>
+            <p class="text-xs text-slate-400">Certificación de barreras perimetrales, optimización de iluminación y sistemas electrónicos integrados.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DIAPOSITIVA 5: RIGOR MULTI-AGENCIA -->
+    <section class="slide" id="slide-4">
+      <div class="max-w-6xl w-full">
+        <h2 class="text-3xl md:text-4xl font-bold mb-10 text-center uppercase tracking-[0.1em]">
+          Control de Contratación <span class="text-[#c5a059]">Rigor Técnico</span>
+        </h2>
+
+        <div class="glass-card overflow-hidden stagger">
+          <table class="w-full text-left text-sm">
+            <thead class="bg-white/5 text-[#c5a059]">
+              <tr>
+                <th class="p-5 uppercase tracking-widest font-black">Sistema</th>
+                <th class="p-5 uppercase tracking-widest font-black">Misión del Blindaje</th>
+              </tr>
+            </thead>
+            <tbody class="text-slate-300">
+              <tr class="border-b border-white/5">
+                <td class="p-5 font-bold text-white uppercase tracking-tighter">SIPOL</td>
+                <td class="p-5">Detección de investigaciones activas o registros policiales de alto impacto.</td>
+              </tr>
+              <tr class="border-b border-white/5">
+                <td class="p-5 font-bold text-white uppercase tracking-tighter">TSJ</td>
+                <td class="p-5">Revelación de sentencias firmes por estafas o apropiación indebida.</td>
+              </tr>
+              <tr class="border-b border-white/5">
+                <td class="p-5 font-bold text-white uppercase tracking-tighter">SAIME</td>
+                <td class="p-5">Validación de identidad real y prevención de falsificación de documentos.</td>
+              </tr>
+              <tr>
+                <td class="p-5 font-bold text-white uppercase tracking-tighter">Interpol</td>
+                <td class="p-5">Protección contra crimen trasnacional y fugitivos de alto perfil internacional.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="mt-8 text-center text-slate-500 text-xs font-bold tracking-widest uppercase">
+          Un currículo es un papel; la verificación en tiempo real es la verdad.
+        </p>
+      </div>
+    </section>
+
+    <!-- DIAPOSITIVA 6: FACTOR HUMANO Y DATOS -->
+    <section class="slide" id="slide-5">
+      <div class="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-16">
+        <div class="stagger">
+          <h2 class="text-3xl font-bold mb-8 uppercase">Auditoría de <span class="text-[#c5a059]">Procesos</span></h2>
+          <div class="space-y-6">
+            <div class="p-6 glass-card">
+              <h3 class="text-xs font-black text-[#c5a059] mb-4 tracking-widest">Trazabilidad de Identidad</h3>
+              <p class="text-sm text-slate-300">
+                Filtros de verificación para cada miembro de la organización, asegurando que solo personal confiable posea acceso.
+              </p>
             </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl w-full px-4 stagger">
-                <div class="glass-card p-8 border-t-2 border-[#c5a059]">
-                    <h3 class="text-lg font-bold mb-4">Continuidad de Negocio</h3>
-                    <p class="text-sm text-slate-400 leading-relaxed">No cumplimos normas por evitar sanciones; lo hacemos para garantizar que su operatividad no se detenga jamás.</p>
-                </div>
-                <div class="glass-card p-8 border-t-2 border-[#c5a059]">
-                    <h3 class="text-lg font-bold mb-4">Mejora Continua</h3>
-                    <p class="text-sm text-slate-400 leading-relaxed">Ciclo PHVA: Planificar, Hacer, Verificar y Actuar para un blindaje que evoluciona con la amenaza.</p>
-                </div>
-                <div class="glass-card p-8 border-t-2 border-[#c5a059]">
-                    <h3 class="text-lg font-bold mb-4">Toma de Decisiones</h3>
-                    <p class="text-sm text-slate-400 leading-relaxed">Enfoque basado en hechos y datos técnicos reales, eliminando la incertidumbre operativa.</p>
-                </div>
+            <div class="p-6 glass-card">
+              <h3 class="text-xs font-black text-[#c5a059] mb-4 tracking-widest">Protección de Activos Digitales</h3>
+              <p class="text-sm text-slate-300">
+                Auditoría de acceso físico y digital para prevenir robo de información estratégica o extorsiones corporativas.
+              </p>
             </div>
-        </section>
+          </div>
+        </div>
 
-        <!-- DIAPOSITIVA 4: DISEÑO AMBIENTAL (CPTED) -->
-        <section class="slide" id="slide-3">
-            <div class="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-                <div class="stagger">
-                    <h2 class="text-4xl font-bold mb-8 uppercase tracking-tight">Diseño <span class="text-[#c5a059]">Ambiental</span></h2>
-                    <p class="text-lg text-slate-300 leading-relaxed mb-8">
-                        Modificamos el entorno físico para reducir la intención delictiva mediante la metodología de Diseño Ambiental para la Prevención del Delito.
-                    </p>
-                    <div class="bg-[#c5a059]/10 p-6 border border-[#c5a059]/30">
-                        <span class="text-5xl font-black gold-gradient-text">40%</span>
-                        <p class="text-xs uppercase font-bold tracking-widest mt-2">Reducción de probabilidad de incidencia delictiva.</p>
-                    </div>
-                </div>
-                <div class="space-y-4 stagger">
-                    <div class="p-6 glass-card">
-                        <p class="font-bold text-sm uppercase mb-2">Puntos Críticos de Control</p>
-                        <p class="text-xs text-slate-400">Identificación de áreas restringidas, gestión de activos de alto costo y flujos de información sensible.</p>
-                    </div>
-                    <div class="p-6 glass-card">
-                        <p class="font-bold text-sm uppercase mb-2">Infraestructura Física</p>
-                        <p class="text-xs text-slate-400">Certificación de barreras perimetrales, optimización de iluminación y sistemas electrónicos integrados.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <div class="stagger flex flex-col justify-center">
+          <h3 class="text-xl font-bold mb-6 text-white uppercase">Beneficios Operativos</h3>
+          <ul class="space-y-4 text-sm text-slate-400">
+            <li class="flex items-center gap-3"><span class="w-2 h-2 bg-[#c5a059]"></span> Reducción drástica de mermas e insumos.</li>
+            <li class="flex items-center gap-3"><span class="w-2 h-2 bg-[#c5a059]"></span> Mejora la percepción de seguridad de clientes.</li>
+            <li class="flex items-center gap-3"><span class="w-2 h-2 bg-[#c5a059]"></span> Respuesta estandarizada ante situaciones de crisis.</li>
+            <li class="flex items-center gap-3"><span class="w-2 h-2 bg-[#c5a059]"></span> Blindaje progresivo del patrimonio institucional.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
 
-        <!-- DIAPOSITIVA 5: RIGOR MULTI-AGENCIA -->
-        <section class="slide" id="slide-4">
-            <div class="max-w-6xl w-full">
-                <h2 class="text-3xl md:text-4xl font-bold mb-10 text-center uppercase tracking-[0.1em]">Control de Contratación <span class="text-[#c5a059]">Rigor Técnico</span></h2>
-                
-                <div class="glass-card overflow-hidden stagger">
-                    <table class="w-full text-left text-sm">
-                        <thead class="bg-white/5 text-[#c5a059]">
-                            <tr>
-                                <th class="p-5 uppercase tracking-widest font-black">Sistema</th>
-                                <th class="p-5 uppercase tracking-widest font-black">Misión del Blindaje</th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-slate-300">
-                            <tr class="border-b border-white/5">
-                                <td class="p-5 font-bold text-white uppercase tracking-tighter">SIPOL</td>
-                                <td class="p-5">Detección de investigaciones activas o registros policiales de alto impacto.</td>
-                            </tr>
-                            <tr class="border-b border-white/5">
-                                <td class="p-5 font-bold text-white uppercase tracking-tighter">TSJ</td>
-                                <td class="p-5">Revelación de sentencias firmes por estafas o apropiación indebida.</td>
-                            </tr>
-                            <tr class="border-b border-white/5">
-                                <td class="p-5 font-bold text-white uppercase tracking-tighter">SAIME</td>
-                                <td class="p-5">Validación de identidad real y prevención de falsificación de documentos.</td>
-                            </tr>
-                            <tr>
-                                <td class="p-5 font-bold text-white uppercase tracking-tighter">Interpol</td>
-                                <td class="p-5">Protección contra crimen trasnacional y fugitivos de alto perfil internacional.</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <p class="mt-8 text-center text-slate-500 text-xs font-bold tracking-widest uppercase">Un currículo es un papel; la verificación en tiempo real es la verdad.</p>
-            </div>
-        </section>
+    <!-- DIAPOSITIVA 7: TENDENCIAS EMERGENTES -->
+    <section class="slide" id="slide-6">
+      <div class="max-w-4xl text-center stagger">
+        <h2 class="text-4xl md:text-5xl font-black mb-12 uppercase gold-gradient-text">
+          Innovación y <span class="text-white">Futuro</span>
+        </h2>
 
-        <!-- DIAPOSITIVA 6: FACTOR HUMANO Y DATOS -->
-        <section class="slide" id="slide-5">
-            <div class="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-16">
-                <div class="stagger">
-                    <h2 class="text-3xl font-bold mb-8 uppercase">Auditoría de <span class="text-[#c5a059]">Procesos</span></h2>
-                    <div class="space-y-6">
-                        <div class="p-6 glass-card">
-                            <h3 class="text-xs font-black text-[#c5a059] mb-4 tracking-widest">Trazabilidad de Identidad</h3>
-                            <p class="text-sm text-slate-300">Filtros de verificación para cada miembro de la organización, asegurando que solo personal confiable posea acceso.</p>
-                        </div>
-                        <div class="p-6 glass-card">
-                            <h3 class="text-xs font-black text-[#c5a059] mb-4 tracking-widest">Protección de Activos Digitales</h3>
-                            <p class="text-sm text-slate-300">Auditoría de acceso físico y digital para prevenir robo de información estratégica o extorsiones corporativas.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="stagger flex flex-col justify-center">
-                    <h3 class="text-xl font-bold mb-6 text-white uppercase">Beneficios Operativos</h3>
-                    <ul class="space-y-4 text-sm text-slate-400">
-                        <li class="flex items-center gap-3"><span class="w-2 h-2 bg-[#c5a059]"></span> Reducción drástica de mermas e insumos.</li>
-                        <li class="flex items-center gap-3"><span class="w-2 h-2 bg-[#c5a059]"></span> Mejora la percepción de seguridad de clientes.</li>
-                        <li class="flex items-center gap-3"><span class="w-2 h-2 bg-[#c5a059]"></span> Respuesta estandarizada ante situaciones de crisis.</li>
-                        <li class="flex items-center gap-3"><span class="w-2 h-2 bg-[#c5a059]"></span> Blindaje progresivo del patrimonio institucional.</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="p-8 glass-card">
+            <p class="text-[#c5a059] font-black text-xs mb-4 uppercase tracking-widest">Tecnología</p>
+            <h3 class="text-sm font-bold mb-2">Digitalización</h3>
+            <p class="text-[10px] text-slate-500 uppercase">Sistemas integrados de control inteligente.</p>
+          </div>
+          <div class="p-8 glass-card">
+            <p class="text-[#c5a059] font-black text-xs mb-4 uppercase tracking-widest">Sostenibilidad</p>
+            <h3 class="text-sm font-bold mb-2">Gestión Ética</h3>
+            <p class="text-[10px] text-slate-500 uppercase">Modelos de seguridad humana y ambiental.</p>
+          </div>
+          <div class="p-8 glass-card">
+            <p class="text-[#c5a059] font-black text-xs mb-4 uppercase tracking-widest">Inteligencia</p>
+            <h3 class="text-sm font-bold mb-2">IA Aplicada</h3>
+            <p class="text-[10px] text-slate-500 uppercase">Análisis predictivo de patrones de riesgo.</p>
+          </div>
+        </div>
 
-        <!-- DIAPOSITIVA 7: TENDENCIAS EMERGENTES -->
-        <section class="slide" id="slide-6">
-            <div class="max-w-4xl text-center stagger">
-                <h2 class="text-4xl md:text-5xl font-black mb-12 uppercase gold-gradient-text">Innovación y <span class="text-white">Futuro</span></h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="p-8 glass-card">
-                        <p class="text-[#c5a059] font-black text-xs mb-4 uppercase tracking-widest">Tecnología</p>
-                        <h3 class="text-sm font-bold mb-2">Digitalización</h3>
-                        <p class="text-[10px] text-slate-500 uppercase">Sistemas integrados de control inteligente.</p>
-                    </div>
-                    <div class="p-8 glass-card">
-                        <p class="text-[#c5a059] font-black text-xs mb-4 uppercase tracking-widest">Sostenibilidad</p>
-                        <h3 class="text-sm font-bold mb-2">Gestión Ética</h3>
-                        <p class="text-[10px] text-slate-500 uppercase">Modelos de seguridad humana y ambiental.</p>
-                    </div>
-                    <div class="p-8 glass-card">
-                        <p class="text-[#c5a059] font-black text-xs mb-4 uppercase tracking-widest">Inteligencia</p>
-                        <h3 class="text-sm font-bold mb-2">IA Aplicada</h3>
-                        <p class="text-[10px] text-slate-500 uppercase">Análisis predictivo de patrones de riesgo.</p>
-                    </div>
-                </div>
-                <p class="mt-12 text-slate-300 leading-relaxed max-w-2xl mx-auto">
-                    Transformamos la vigilancia tradicional en un sistema de mejora continua que protege la vida, los activos y la reputación institucional.
-                </p>
-            </div>
-        </section>
+        <p class="mt-12 text-slate-300 leading-relaxed max-w-2xl mx-auto">
+          Transformamos la vigilancia tradicional en un sistema de mejora continua que protege la vida, los activos y la reputación institucional.
+        </p>
+      </div>
+    </section>
 
-        <!-- DIAPOSITIVA 8: CIERRE Y CONTACTO -->
-        <section class="slide" id="slide-7">
-            <div class="max-w-3xl text-center stagger">
-                <div class="w-16 h-1 bg-[#c5a059] mx-auto mb-10"></div>
-                <h2 class="text-4xl md:text-5xl font-black mb-6 uppercase">Compromiso con la Excelencia</h2>
-                <p class="text-slate-400 mb-12 uppercase tracking-widest text-sm font-bold">Iniciemos el blindaje de su organización hoy mismo.</p>
-                
-                <!-- BOTONES DE CONTACTO -->
-                <div class="flex flex-col md:flex-row justify-center gap-4 mb-16">
-                    <a href="https://wa.me/584142296639" target="_blank" class="contact-btn btn-wa">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                        WhatsApp
-                    </a>
-                    <a href="mailto:goitiacicpc@gmail.com" class="contact-btn btn-mail">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                        Enviar Correo
-                    </a>
-                </div>
+    <!-- DIAPOSITIVA 8: CIERRE Y CONTACTO -->
+    <section class="slide" id="slide-7">
+      <div class="max-w-3xl text-center stagger">
+        <div class="w-16 h-1 bg-[#c5a059] mx-auto mb-10"></div>
+        <h2 class="text-4xl md:text-5xl font-black mb-6 uppercase">Compromiso con la Excelencia</h2>
+        <p class="text-slate-400 mb-12 uppercase tracking-widest text-sm font-bold">
+          Iniciemos el blindaje de su organización hoy mismo.
+        </p>
 
-                <div class="pt-10">
-                    <p class="text-xl font-bold tracking-[0.4em] text-[#e2c28d] mb-1">MSc. José Goitia M.</p>
-                    <p class="text-[9px] uppercase tracking-[0.6em] text-slate-500 font-bold">Comisario General</p>
-                </div>
-            </div>
-        </section>
+        <!-- BOTONES DE CONTACTO -->
+        <div class="flex flex-col md:flex-row justify-center gap-4 mb-16">
+          <a href="https://wa.me/584142296639" target="_blank" class="contact-btn btn-wa">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            WhatsApp
+          </a>
+          <a href="mailto:goitiacicpc@gmail.com" class="contact-btn btn-mail">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+            Enviar Correo
+          </a>
+        </div>
 
-    </main>
+        <div class="pt-10">
+          <p class="text-xl font-bold tracking-[0.4em] text-[#e2c28d] mb-1">MSc. José Goitia M.</p>
+          <p class="text-[9px] uppercase tracking-[0.6em] text-slate-500 font-bold">Comisario General</p>
+        </div>
+      </div>
+    </section>
+  </main>
 
-    <!-- NAVEGACIÓN DISCRETA -->
-    <div class="fixed bottom-10 right-10 flex gap-2 z-[200]">
-        <button onclick="prevSlide()" class="p-4 glass-card hover:bg-[#c5a059]/20 transition-all rounded-sm" aria-label="Anterior">
-            <svg class="w-5 h-5 text-[#c5a059]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
-        </button>
-        <button onclick="nextSlide()" class="p-4 bg-[#c5a059] text-[#061121] hover:brightness-110 transition-all rounded-sm shadow-xl shadow-[#c5a059]/30" aria-label="Siguiente">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-        </button>
-    </div>
+  <!-- NAVEGACIÓN DISCRETA -->
+  <div class="fixed bottom-10 right-10 flex gap-2 z-[200]">
+    <button onclick="prevSlide()" class="p-4 glass-card hover:bg-[#c5a059]/20 transition-all rounded-sm" aria-label="Anterior">
+      <svg class="w-5 h-5 text-[#c5a059]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+    </button>
 
-    <script>
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.slide');
-        const progress = document.getElementById('progress');
+    <button onclick="nextSlide()" class="p-4 bg-[#c5a059] text-[#061121] hover:brightness-110 transition-all rounded-sm shadow-xl shadow-[#c5a059]/30" aria-label="Siguiente">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+    </button>
+  </div>
 
-        function updateView() {
-            slides.forEach((s, i) => {
-                s.classList.toggle('active', i === currentSlide);
-            });
-            const perc = (currentSlide / (slides.length - 1)) * 100;
-            progress.style.width = `${perc}%`;
-        }
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const progress = document.getElementById('progress');
 
-        function nextSlide() {
-            if (currentSlide < slides.length - 1) {
-                currentSlide++;
-                updateView();
-            }
-        }
+    function updateView() {
+      slides.forEach((s, i) => {
+        s.classList.toggle('active', i === currentSlide);
+      });
+      const perc = (currentSlide / (slides.length - 1)) * 100;
+      progress.style.width = `${perc}%`;
+    }
 
-        function prevSlide() {
-            if (currentSlide > 0) {
-                currentSlide--;
-                updateView();
-            }
-        }
+    function nextSlide() {
+      if (currentSlide < slides.length - 1) {
+        currentSlide++;
+        updateView();
+      }
+    }
 
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
-            if (e.key === 'ArrowLeft') prevSlide();
-        });
+    function prevSlide() {
+      if (currentSlide > 0) {
+        currentSlide--;
+        updateView();
+      }
+    }
 
-        // Soporte táctil
-        let startX;
-        document.addEventListener('touchstart', e => startX = e.touches[0].clientX);
-        document.addEventListener('touchend', e => {
-            let diffX = startX - e.changedTouches[0].clientX;
-            if (Math.abs(diffX) > 50) {
-                diffX > 0 ? nextSlide() : prevSlide();
-            }
-        });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+      if (e.key === 'ArrowLeft') prevSlide();
+    });
 
-        window.onload = updateView;
-    </script>
+    // Soporte táctil
+    let startX;
+    document.addEventListener('touchstart', e => startX = e.touches[0].clientX);
+    document.addEventListener('touchend', e => {
+      let diffX = startX - e.changedTouches[0].clientX;
+      if (Math.abs(diffX) > 50) {
+        diffX > 0 ? nextSlide() : prevSlide();
+      }
+    });
+
+    window.onload = updateView;
+  </script>
 </body>
 </html>
